@@ -9,12 +9,12 @@ class ImageSerializer(serializers.ModelSerializer):
 class StorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Story
-        fields = ('title', 'content', 'user_id',)
+        fields = ('id','title', 'content', 'user_id',)
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('content', 'created_at', 'user')
+        fields = ('id','content', 'created_at', 'user_id', 'story_id')
 
 class StoryDetailSerializer(serializers.ModelSerializer):
     like_count = serializers.IntegerField(source="like_users.count")
@@ -22,4 +22,4 @@ class StoryDetailSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(source="comment_set", many=True)
     class Meta:
         model = Story
-        fields = ('title', 'content', 'created_at', 'user', 'like_count', 'images', 'comments')
+        fields = ('id','title', 'content', 'created_at', 'user', 'like_count', 'images', 'comments')

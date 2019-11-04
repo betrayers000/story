@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Story, StoryImage, Comment
-from .serializers import StorySerializer, ImageSerializer, StoryDetailSerializer
+from .serializers import StorySerializer, ImageSerializer, StoryDetailSerializer, CommentSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -46,4 +46,11 @@ def story_detail(request, id):
     elif request.method == "DELETE":
         story.delete()
         return Response(SUCCES_MESSAGE)
-    
+
+@api_view(['POST'])
+def comment(request, id):
+    if request.method == 'POST':
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user_id=request.user.id, story_id=id)
+            return Response(SUCCES_MESSAGE)

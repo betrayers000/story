@@ -10,7 +10,7 @@ class Story(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_storys")
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_storys", blank=True)
 
 class StoryImage(models.Model):
     image = ProcessedImageField(
